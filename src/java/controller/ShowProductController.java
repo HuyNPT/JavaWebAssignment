@@ -9,6 +9,7 @@ import daos.BrandDAO;
 import daos.ProductDAO;
 import dtos.BrandDTO;
 import dtos.ProductDTO;
+import dtos.UserDTO;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -39,18 +40,28 @@ public class ShowProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        BrandDAO dao = new BrandDAO();
-        ProductDAO pdao = new ProductDAO();
-        dao.getBrand();
-        List<BrandDTO> listBrand = dao.getListBrand();
-        List<ProductDTO> listProduct = pdao.getAllProduct();
         HttpSession session = request.getSession();
-        session.setAttribute("BRAND", listBrand);
-        session.setAttribute("PRODUCT", listProduct);
-        request.getRequestDispatcher("category.jsp").forward(request, response);
-    }
+        UserDTO user = (UserDTO) session.getAttribute("USER");
+        if (user != null) {
+            if (user.getRole() == 1) {
+                BrandDAO dao = new BrandDAO();
+                ProductDAO pdao = new ProductDAO();
+                dao.getBrand();
+                List<BrandDTO> listBrand = dao.getListBrand();
+                List<ProductDTO> listProduct = pdao.getAllProduct();
 
+                session.setAttribute("BRAND", listBrand);
+                session.setAttribute("PRODUCT", listProduct);
+                request.getRequestDispatcher("category.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+        } else {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

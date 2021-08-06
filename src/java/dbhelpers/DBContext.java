@@ -12,12 +12,13 @@ import java.sql.DriverManager;
  *
  * @author huynp
  */
+//support database connection 
 public class DBContext {
 
     public Connection getConnection() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=Assignment;";
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=PRJ301_SE07D_Group7;";
             return DriverManager.getConnection(connectionUrl, "sa", "123456");
         } catch (Exception e) {
             System.out.println(e.getMessage());

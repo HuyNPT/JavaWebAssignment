@@ -5,11 +5,15 @@
  */
 package controller;
 
+import daos.BrandDAO;
 import daos.ProductDAO;
+import dtos.BrandDTO;
 import dtos.ProductDTO;
+import dtos.UserDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,14 +38,30 @@ public class ProductDetailController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         String id = request.getParameter("id");
         ProductDAO dao = new ProductDAO();
         ProductDTO dto = dao.getAllProductById(id);
         HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("USER");
         session.setAttribute("PRODUCTDETAIL", dto);
-        request.getRequestDispatcher("productDetail.jsp").forward(request, response);
+        if (user != null) {
+            if (user.getRole() == 1) {
+                request.getRequestDispatcher("productDetail.jsp").forward(request, response);
+            } else if (user.getRole() == 2) {
+                BrandDAO bDao = new BrandDAO();
+                bDao.getBrand();
+                List<BrandDTO> listB = bDao.getListBrand();
+                session.setAttribute("LISTB", listB);
+                request.getRequestDispatcher("editProduct.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+        } else {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +76,11 @@ public class ProductDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDetailController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -70,7 +94,11 @@ public class ProductDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDetailController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

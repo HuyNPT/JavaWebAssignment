@@ -3,13 +3,47 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Java%20Web/Assignment/src/java/controller/ShowProductByCategoryController.java</file>
-            <file>file:/D:/Java%20Web/Assignment/src/java/controller/SearchProductController.java</file>
-            <file>file:/D:/Java%20Web/Assignment/web/category.jsp</file>
-            <file>file:/D:/Java%20Web/Assignment/web/productDetail.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/dbhelpers/DBContext.java</file>
+            <file>file:/D:/Java%20Web/Assignment/web/checkoutsuccess.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/EditProductController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/CreateNewAccController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/web/editProduct.jsp</file>
             <file>file:/D:/Java%20Web/Assignment/src/java/controller/ProductDetailController.java</file>
             <file>file:/D:/Java%20Web/Assignment/src/java/controller/ShowProductController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/LogOutController.java</file>
             <file>file:/D:/Java%20Web/Assignment/src/java/daos/ProductDAO.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/cart/CartProduct.java</file>
+            <file>file:/D:/Java%20Web/Assignment/web/login.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/ManageProductController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/CheckOutController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/web/index.html</file>
+            <file>file:/D:/Java%20Web/Assignment/web/manageProducts.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Java%20Web/Assignment/web/register.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/dtos/ProductDTO.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/RemoveItemCartController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/helper/Helper.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/daos/UserDAO.java</file>
+            <file>file:/D:/Java%20Web/Assignment/web/checkout.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/web/category.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/daos/BrandDAO.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/DeleteProductController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/AddProductController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/dtos/UserDTO.java</file>
+            <file>file:/D:/Java%20Web/Assignment/web/header.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/dtos/BrandDTO.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/cart/CartBean.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/ShowProductByCategoryController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/error/RegistrationError.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/SearchProductController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/ShowAddProductPage.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/UpdateCartController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/web/addProduct.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/CheckLoginController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/web/productDetail.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/web/cart.jsp</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/controller/AddToCartController.java</file>
+            <file>file:/D:/Java%20Web/Assignment/src/java/daos/OrderDAO.java</file>
         </group>
     </open-files>
 </project-private>

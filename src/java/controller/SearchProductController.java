@@ -7,6 +7,7 @@ package controller;
 
 import daos.ProductDAO;
 import dtos.ProductDTO;
+import dtos.UserDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -36,12 +37,22 @@ public class SearchProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String keySearch = request.getParameter("txtSearch");
-        ProductDAO dao = new ProductDAO();
-        List<ProductDTO> list = dao.getAllProductByName(keySearch);
         HttpSession session = request.getSession();
-        session.setAttribute("PRODUCT", list);
-        request.getRequestDispatcher("category.jsp").forward(request, response);
+        UserDTO user = (UserDTO) session.getAttribute("USER");
+        if (user != null) {
+            if (user.getRole() == 1) {
+                String keySearch = request.getParameter("txtSearch");
+                ProductDAO dao = new ProductDAO();
+                List<ProductDTO> list = dao.getAllProductByName(keySearch);
+                session.setAttribute("PRODUCT", list);
+                request.getRequestDispatcher("category.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+
+        } else {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

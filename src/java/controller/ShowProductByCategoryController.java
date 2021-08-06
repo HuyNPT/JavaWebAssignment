@@ -7,6 +7,7 @@ package controller;
 
 import daos.ProductDAO;
 import dtos.ProductDTO;
+import dtos.UserDTO;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -34,16 +35,27 @@ public class ShowProductByCategoryController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String id = request.getParameter("id");
-        ProductDAO dao = new ProductDAO();
-        List<ProductDTO> list = dao.getAllProductByCategory(id);
-        HttpSession session = request.getSession();
-        session.setAttribute("PRODUCT", list);
-        request.getRequestDispatcher("category.jsp").forward(request, response);
-    }
 
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("USER");
+        if (user != null) {
+            if (user.getRole() == 1) {
+                String id = request.getParameter("id");
+                ProductDAO dao = new ProductDAO();
+                List<ProductDTO> list = dao.getAllProductByCategory(id);
+
+                session.setAttribute("PRODUCT", list);
+                request.getRequestDispatcher("category.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+        } else {
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

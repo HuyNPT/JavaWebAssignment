@@ -9,8 +9,9 @@ package dtos;
  *
  * @author huynp
  */
+//Brand data tranfer object
 public class BrandDTO {
-
+    
     private String brandName;
     private int id;
 

@@ -67,59 +67,25 @@
             footer a {
                 color: #f8f9fa!important
             }
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
         </style>
     </head>
     <body>
+        <c:if test ="${sessionScope.USER.role != 1}">
+            <c:redirect url="login.jsp"></c:redirect>
+        </c:if>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <!------ Include the above in your HEAD tag ---------->
 
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="index.html">Simple Ecommerce</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <c:set var="p" value="${PRODUCTDETAIL}"></c:set>
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
-                        <ul class="navbar-nav m-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.html">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="category.html">Categories</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="product.html">Product <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="cart.html">Cart</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="contact.html">Contact</a>
-                            </li>
-                        </ul>
-
-                        <form class="form-inline my-2 my-lg-0">
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-secondary btn-number">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <a class="btn btn-success btn-sm ml-3" href="cart.html">
-                                <i class="fa fa-shopping-cart"></i> Cart
-                                <span class="badge badge-light">3</span>
-                            </a>
-                        </form>
-
-                    </div>
-                </div>
-            </nav>
+        <jsp:include page="header.jsp"></jsp:include>
+        <c:set var ="p" value="${sessionScope.PRODUCTDETAIL}"></c:set>
             <section class="jumbotron text-center">
                 <div class="container">
                     <h1 class="jumbotron-heading">E-COMMERCE PRODUCT</h1>
@@ -130,11 +96,6 @@
                 <div class="row">
                     <div class="col">
                         <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                <li class="breadcrumb-item"><a href="category.html">Category</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Product</li>
-                            </ol>
                         </nav>
                     </div>
                 </div>
@@ -160,7 +121,12 @@
                             <p class="price">${p.name}</p>
                             <p class="price">${p.price} $</p>
 
-                            <form method="get" action="cart.html">
+                            <form action="AddToCartController" method="POST">
+                                <input type="hidden" value = "${PRODUCTDETAIL.image}" name ="imgage"/>
+                                <input type="hidden" value="${PRODUCTDETAIL.id}" name = "Id"/>
+                                <input type="hidden" value="${PRODUCTDETAIL.name}" name = "Name"/>
+                                <input type="hidden" value="${PRODUCTDETAIL.price}" name = "Price"/>
+                                <input type="hidden" value="${PRODUCTDETAIL.quantity}" name = "QuantityInDb"/>
                                 <div class="form-group">
                                     <label>Quantity :</label>
                                     <div class="input-group mb-3">
@@ -169,17 +135,22 @@
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text" class="form-control"  id="quantity" name="quantity" min="1" max="100" value="1">
+                                        <input type="number" class="form-control"  id="quantity" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="Quantity" min="1" max="${PRODUCTDETAIL.quantity}" value="1">
                                         <div class="input-group-append">
                                             <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
+
+                                    </div>
+                                    <div class="reviews_product p-3 mb-2">
+                                        Only ${PRODUCTDETAIL.quantity} products left
                                     </div>
                                 </div>
-                                <a href="cart.html" class="btn btn-success btn-lg btn-block text-uppercase">
+
+                                <button  type="submit" class="btn btn-success btn-lg btn-block text-uppercase" >
                                     <i class="fa fa-shopping-cart"></i> Add To Cart
-                                </a>
+                                </button>  
                             </form>
 
                         </div>
@@ -202,6 +173,9 @@
                 </div> 
             </div>
         </div>
+
+
+        
 
 
         <!-- Footer -->
@@ -258,25 +232,45 @@
             </div>
         </footer>
 
+        <c:if test="${not empty requestScope.MESS}">
+            <script type="text/javascript">
+                var msg = "${requestScope.MESS}"
+                window.onload = function () {
+                    alert(msg);
+                }
+            </script>
 
-        <!-- Modal image -->
-        <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="productModalLabel">Product title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <img class="img-fluid" src="https://dummyimage.com/1200x1200/55595c/fff" />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
+            <c:remove var="MESS" scope="request"/>
+        </c:if>
+        <script>
+            $(document).ready(function () {
+                var quantity = 1;
+                $('.quantity-right-plus').click(function (e) {
+                    e.preventDefault();
+
+                    var quantity = parseInt($('#quantity').val());
+                    if (quantity < ${PRODUCTDETAIL.quantity}) {
+                        $('#quantity').val(quantity + 1);
+                    }
+                });
+
+                $('.quantity-left-minus').click(function (e) {
+                    e.preventDefault();
+                    var quantity = parseInt($('#quantity').val());
+                    if (quantity > 1) {
+                        $('#quantity').val(quantity - 1);
+                    }
+                });
+                $('#quantity').on('change', function () {
+                    if ($(this).val() >= ${PRODUCTDETAIL.quantity}) {
+                        $('#quantity').val(${PRODUCTDETAIL.quantity});
+                    }
+                });
+            });
+        </script>
+
+
+
+
+
 </html>

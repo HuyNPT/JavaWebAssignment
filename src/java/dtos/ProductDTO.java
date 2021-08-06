@@ -9,6 +9,7 @@ package dtos;
  *
  * @author huynp
  */
+//Product data tranfer object
 public class ProductDTO {
 
     private int id;
@@ -17,17 +18,35 @@ public class ProductDTO {
     private double price;
     private String title;
     private String description;
+    private int quantity;
+    private String BrandName;
+    public String getBrandName() {
+        return BrandName;
+    }
+
+    public void setBrandName(String BrandName) {
+        this.BrandName = BrandName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public ProductDTO() {
     }
 
-    public ProductDTO(int id, String name, String image, double price, String title, String description) {
+    public ProductDTO(int id, String name, String image, double price, String title, String description, int quantity) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.price = price;
         this.title = title;
         this.description = description;
+        this.quantity = quantity;
     }
 
     public int getId() {
